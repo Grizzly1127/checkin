@@ -19,3 +19,4 @@ jobs:
         env:
           GLADOS: ${{ secrets.GLADOS }}
           NOTIFY: ${{ secrets.NOTIFY }}
+          FT_SEND_KEY: ${{secrets.FT_SEND_KEY}}
