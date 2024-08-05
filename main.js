@@ -56,9 +56,10 @@ const notify_ft = async (contents) => {
   
   const baseUrl = `https://sctapi.ftqq.com/${token}.send`;
   const params = {
-    title: contents[0],
+    text: contents[0],
     desp: contents.join('<br>')
   };
+  console.log(params)
   
   // 使用 URL 和 URLSearchParams 搭配处理
   const url = new URL(baseUrl);
