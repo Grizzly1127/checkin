@@ -21,6 +21,7 @@ const glados = async () => {
       'Checkin OK',
       `${checkin.message}`,
       `Left Days ${Number(status.data.leftDays)}`,
+      `${checkin.message}`.replace('Checkin!', `${Number(status.data.leftDays)}!`)
     ]
     console.log(res)
     return res
@@ -56,8 +57,8 @@ const notify_ft = async (contents) => {
   
   const baseUrl = `https://sctapi.ftqq.com/${token}.send`;
   const params = {
-    text: contents[1],
-    desp: contents.join('\n')
+    text: contents[3],
+    desp: contents.join('\n\n')
   };
   console.log(params)
   
