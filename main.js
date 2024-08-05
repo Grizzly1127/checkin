@@ -50,8 +50,27 @@ const notify = async (contents) => {
   })
 }
 
+const notify_ft = async (contents) => {
+  const token = process.env.FT_SEND_KEY
+  if (!token || !contents) return
+  
+  const baseUrl = `https://sctapi.ftqq.com/${token}.send`;
+  const params = {
+    title: contents[0],
+    desp: contents.join('<br>')
+  };
+  
+  // 使用 URL 和 URLSearchParams 搭配处理
+  const url = new URL(baseUrl);
+  url.search = new URLSearchParams(params);
+  await fetch(url.toString(), {
+    method: 'GET'
+  })
+}
+
 const main = async () => {
-  await notify(await glados())
+  //await notify(await glados())
+  await notify_ft(await glados())
 }
 
 main()
