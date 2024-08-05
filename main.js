@@ -21,7 +21,7 @@ const glados = async () => {
       'Checkin OK',
       `${checkin.message}`,
       `Left Days ${Number(status.data.leftDays)}`,
-      `${checkin.message}`.replace('Checkin!', `${Number(status.data.leftDays)}!`)
+      `${checkin.message}`.replace('Checkin!', `Days ${Number(status.data.leftDays)}!`)
     ]
     console.log(res)
     return res
