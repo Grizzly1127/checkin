@@ -56,8 +56,8 @@ const notify_ft = async (contents) => {
   
   const baseUrl = `https://sctapi.ftqq.com/${token}.send`;
   const params = {
-    text: contents[0],
-    desp: contents.join('<br>')
+    text: contents[1],
+    desp: contents.join('\n')
   };
   console.log(params)
   
