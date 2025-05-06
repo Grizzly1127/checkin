@@ -19,4 +19,6 @@ jobs:
         env:
           GLADOS: ${{ secrets.GLADOS }}
           NOTIFY: ${{ secrets.NOTIFY }}
-          FT_SEND_KEY: ${{secrets.FT_SEND_KEY}}
+          FT_SEND_KEY: ${{secrets.FT_SEND_KEY }}
+          WXPUSHER_APP_TOKEN: ${{secrets.WXPUSHER_APP_TOKEN }}
+          WXPUSHER_UIDS: ${{secrets.WXPUSHER_UIDS }}

@@ -16,7 +16,7 @@ const glados = async () => {
       method: 'GET',
       headers,
     }).then((r) => r.json())
-    
+
     const res = [
       'Checkin OK',
       `${checkin.message}`,
@@ -54,14 +54,14 @@ const notify = async (contents) => {
 const notify_ft = async (contents) => {
   const token = process.env.FT_SEND_KEY
   if (!token || !contents) return
-  
+
   const baseUrl = `https://sctapi.ftqq.com/${token}.send`;
   const params = {
     text: contents[3],
     desp: contents.join('\n\n')
   };
   console.log(params)
-  
+
   // 使用 URL 和 URLSearchParams 搭配处理
   const url = new URL(baseUrl);
   url.search = new URLSearchParams(params);
@@ -70,9 +70,40 @@ const notify_ft = async (contents) => {
   })
 }
 
+const notify_wxpusher = async (contents) => {
+  const appToken = process.env.WXPUSHER_APP_TOKEN
+  const uids = process.env.WXPUSHER_UIDS
+  if (!appToken || !uids || !contents) return
+
+  // 将uids字符串转换为数组（如果有多个UID，以逗号分隔）
+  const uidArray = uids.split(',').map(uid => uid.trim())
+
+  console.log('Sending message via WxPusher...')
+  await fetch('https://wxpusher.zjiecode.com/api/send/message', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      appToken,
+      content: contents.join('<br>'),
+      summary: contents[0], // 消息摘要
+      contentType: 2, // 内容类型 1表示文字 2表示html
+      uids: uidArray,
+      url: process.env.GITHUB_SERVER_URL ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}` : '' // 可选：点击消息后的跳转链接
+    }),
+  }).then(response => response.json())
+    .then(data => {
+      console.log('WxPusher response:', data)
+    })
+    .catch(error => {
+      console.error('WxPusher error:', error)
+    })
+}
+
 const main = async () => {
-  //await notify(await glados())
-  await notify_ft(await glados())
+  const result = await glados()
+  //await notify(result)
+  //await notify_ft(result)
+  await notify_wxpusher(result)
 }
 
 main()
